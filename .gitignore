@@ -1,0 +1,8 @@
+fibonacci
+test_fibonacci
+*.o
+*.tar
+*.tar.gz
+*.swp
+.vscode/
+.DS_Store

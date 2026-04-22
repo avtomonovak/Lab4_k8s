@@ -1,0 +1,49 @@
+# Общие настройки
+name: fibonacci-lab4
+replicaCount: 2
+
+# Настройки образа
+image:
+  repository: ghcr.io/avtomonovak/fibonacci-lab4
+  tag: latest
+  pullPolicy: IfNotPresent
+
+# Настройки сервиса
+service:
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
+
+# Настройки ресурсов
+resources:
+  requests:
+    memory: "64Mi"
+    cpu: "100m"
+  limits:
+    memory: "128Mi"
+    cpu: "200m"
+
+# Настройки HPA (автоскейлинг)
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50
+  targetMemoryUtilizationPercentage: 80
+
+# Настройки liveness/readiness probes
+probes:
+  liveness:
+    enabled: true
+    initialDelaySeconds: 15
+    periodSeconds: 20
+  readiness:
+    enabled: true
+    initialDelaySeconds: 5
+    periodSeconds: 10
+
+# Аннотации для Prometheus
+prometheus:
+  scrape: true
+  port: 8080
+  path: /metrics
